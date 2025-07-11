@@ -5,7 +5,19 @@ Make a Class
 ------------
 
 Q1. What’s const-correctness and why is it important?
-A1. TODO
+A1. 就是给不会被修改的数据加上 const 修饰符 传入的参数 对象状态 返回值等
+    防止意外修改 使代码更加简洁易读
 
 Q2. Is your class const-correct? How do you know?
 A2. TODO
+
+在提交此文件之前，请确保文件中不再遗留任何TODO占位符（并删除此注释）。  
+
+创建一个类  
+------------  
+
+问题1：什么是常量正确性？为什么它很重要？  
+答案1：待完善  
+
+问题2：你的类是否具有常量正确性？如何确认？  
+答案2：待完善

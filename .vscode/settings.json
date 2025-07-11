@@ -56,7 +56,27 @@
     "unordered_set": "cpp",
     "variant": "cpp",
     "vector": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "atomic": "cpp",
+    "bit": "cpp",
+    "charconv": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "exception": "cpp",
+    "functional": "cpp",
+    "iterator": "cpp",
+    "memory_resource": "cpp",
+    "numeric": "cpp",
+    "random": "cpp",
+    "system_error": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp",
+    "format": "cpp",
+    "numbers": "cpp",
+    "ranges": "cpp",
+    "span": "cpp",
+    "text_encoding": "cpp",
+    "cinttypes": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
@@ -114,5 +134,6 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
-  "C_Cpp_Runner.msvcSecureNoWarnings": false
+  "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  "C_Cpp.errorSquiggles": "disabled"
 }
