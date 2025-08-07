@@ -8,6 +8,7 @@ bool operator<(const Token& a, const Token& b) {
 
 bool operator<(const Misspelling& a, const Misspelling& b) { return a.token < b.token; }
 
+// pred 一个一元谓词 通常是函数对象或者 lambda 表达式 用于测试每一个元素是否满足特定条件
 template <typename Iterator, typename UnaryPred>
 std::vector<Iterator> find_all(Iterator begin, Iterator end, UnaryPred pred) {
   std::vector<Iterator> its{begin};
