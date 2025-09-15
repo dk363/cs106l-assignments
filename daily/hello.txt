@@ -1,1 +1,2 @@
-Hello
+hello cs106l
+it's open again
