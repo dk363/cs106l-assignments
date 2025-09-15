@@ -4,6 +4,7 @@
 #include <cmath>
 #include <vector>    // std::vector
 #include <utility>   // std::pair
+#include <unordered_map>
 
 
 void andExample(int x) {
@@ -53,7 +54,10 @@ void cinExample() {
 
 }
 int main() {
-    cinExample();
+    std::unordered_map<std::string, int> map;
+    map.insert({"string", 1});
+    double lf = map.load_factor();
+    std::cout << lf << std::endl;
     return 0;
 }
 
