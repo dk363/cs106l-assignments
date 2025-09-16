@@ -67,7 +67,7 @@ void parse_csv(std::string filename, std::vector<Course>& courses) {
     std::cerr << "error: could not open file";
     return;
   }
-  std::string header_line;
+  std::string header_line; // 表头
   std::getline(ifs, header_line);
 
   std::string line;
@@ -107,6 +107,11 @@ void write_courses_offered(std::vector<Course>& all_courses) {
   ofs << "Title,Number of Units,Quarter\n";
 
   std::vector<Course> to_delete;
+  // quarter != null 该课程被视为开设状态
+  // 将这些不包含 null 的课程写入输出文件
+  // 已经开设的课程要被 移除
+  // 在遍历时删除元素是不太好的
+  // 因此用一个另外的向量移除元素
   for (const Course& course : all_courses) {
     if (course.quarter != "null") {
       ofs << course.title << ',' << course.number_of_units << ',' << course.quarter << '\n';
@@ -137,6 +142,8 @@ void write_courses_not_offered(std::vector<Course> unlisted_courses) {
   std::ofstream ofs("student_output/courses_not_offered.csv");
   ofs << "Title,Number of Units,Quarter\n";
 
+  // 经过上一个函数处理
+  // 这里 all_course 中只包含为开设的课程
   std::vector<Course> to_add;
   for (const Course& course : unlisted_courses) {
     ofs << course.title << ',' << course.number_of_units << ',' << course.quarter << '\n';
