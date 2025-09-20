@@ -188,3 +188,7 @@ private:
         reserve(new_cap);
     }
 };
+
+class SimpleDeque {
+    
+}

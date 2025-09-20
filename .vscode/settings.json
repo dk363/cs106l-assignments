@@ -78,7 +78,8 @@
     "text_encoding": "cpp",
     "cinttypes": "cpp",
     "flat_map": "cpp",
-    "flat_set": "cpp"
+    "flat_set": "cpp",
+    "chrono": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

@@ -15,7 +15,7 @@
 #include <unordered_set>
 #include <random>
 
-std::string kYourName = "Kuangdi Xu"; // Don't forget to change this!
+std::string kYourName = "Kuangdi Hsu"; // Don't forget to change this!
 
 /**
  * Takes in a file name and returns a set containing all of the applicant names as a set.
@@ -37,7 +37,7 @@ std::string kYourName = "Kuangdi Xu"; // Don't forget to change this!
   请确保同时更改utils.h中的对应函数。
 */
 std::set<std::string> get_applicants(std::string filename) {
-  std::ifstream ifs(filename);
+  std::ifstream ifs(filename); // input file stream
   if (!ifs.is_open()) {
     std::cerr << "error: could not open file";
     return std::set<std::string>{};
@@ -53,15 +53,18 @@ std::set<std::string> get_applicants(std::string filename) {
 }
 
 
+/// @brief 提取首字母
+/// @param full_name 
+/// @return 
 std::string get_all_initials(const std::string& full_name) {
   std::string initial = "";
   bool new_word = true;
 
   for (char c : full_name) {
-    if (std::isspace(c)) {
+    if (std::isspace(static_cast<unsigned char>(c))) {
       new_word = true;
     } else if (new_word) {}
-    initial += std::tolower(c);
+    initial += static_cast<char>(std::tolower(c));
     new_word = false;
   }
 
@@ -77,7 +80,7 @@ std::string get_all_initials(const std::string& full_name) {
  * @return          A queue containing pointers to each matching name.
  */
 /**
-接收一组学生姓名的引用，并返回一个与给定学生姓名匹配的姓名队列。
+接收一个集合学生姓名的引用，并返回一个与给定学生姓名匹配的姓名队列。
   @param name      返回的姓名队列应与该姓名具有相同的首字母。
   @param students  学生姓名的集合。
   @return          一个包含指向每个匹配姓名指针的队列。
@@ -91,15 +94,14 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
 
   std::string name_all_initials = get_all_initials(name);
 
-  for (const std::string &s : students) {
-    if (s.empty()) {
-      continue;
-    }
+  for (auto it = students.begin(); it != students.end(); ++it) {
+    const std::string& s = *it;
+    if (s.empty()) continue;
 
-    std::string student_all_initials = get_all_initials(s);
+    std::string students_all_initials = get_all_initials(s);
 
-    if (student_all_initials == name_all_initials) {
-      ans.push(&s);
+    if (students_all_initials == name_all_initials) {
+      ans.push(&(*it));
     }
   }
   return ans;
@@ -132,23 +134,21 @@ std::string get_match(std::queue<const std::string*>& matches) {
 
   std::size_t size = matches.size();
 
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  std::uniform_int_distribution<> dist(0, size - 1);
+  std::string myname = get_all_initials(kYourName);
 
-  int r = dist(gen);
   const std::string* result = nullptr;
   
   // deque 不支持随机访问 必须要一个一个遍历
   for (int i = 0; i < size; ++i) {
-    const std::string* curr = matches.front();
+    const std::string* curr_name = matches.front();
     matches.pop();
 
-    if (i == r) {
-      result = curr;
+    std::string curr_ini = get_all_initials(*curr_name);
+    if (curr_ini == myname) {
+      result = curr_name;
     }
 
-    matches.push(curr);
+    matches.push(curr_name);
   }
 
   return result ? *result : "NO MATCHES FOUND.";

@@ -53,11 +53,17 @@ void cinExample() {
     std::cout << pi << " " << name << " " << tao << std::endl;
 
 }
+
+/**
+ * int x = 106;
+ * int* px = x; // 这里不可以通过编译的原因是px 是一个指针变量 而这样相当于直接将整数变量直接赋值
+ * // 因此这里类型不匹配
+ * // 所以编译会出错
+ */
 int main() {
-    std::unordered_map<std::string, int> map;
-    map.insert({"string", 1});
-    double lf = map.load_factor();
-    std::cout << lf << std::endl;
+    int x = 106;
+    int* px = x;
+    std::cout << *px << std::endl;
     return 0;
 }
 
