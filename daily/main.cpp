@@ -6,6 +6,7 @@
 #include <utility>   // std::pair
 #include <unordered_map>
 
+#include "Vector.h"
 
 void andExample(int x) {
     int num = x; 
@@ -54,6 +55,25 @@ void cinExample() {
 
 }
 
+void test() {
+    Vector<int> v;
+
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+
+    std::cout << "v.size() = " << v.size() << std::endl;
+
+    std::cout << "Elements: ";
+    for (auto x : v) {
+        std::cout << x << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "v.at(1) = " << v.at(1) << std::endl;
+    std::cout << "v[2] = " << v[2] << std::endl;
+}
+
 /**
  * int x = 106;
  * int* px = x; // 这里不可以通过编译的原因是px 是一个指针变量 而这样相当于直接将整数变量直接赋值
@@ -62,7 +82,7 @@ void cinExample() {
  */
 int main() {
     int x = 106;
-    int* px = x;
+    int* px = &x;
     std::cout << *px << std::endl;
     return 0;
 }
