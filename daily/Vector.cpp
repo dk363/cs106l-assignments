@@ -49,7 +49,13 @@ void Vector<T>::push_back(const T& value)
 }
 
 template <typename T>
-T& Vector<T>::at(size_t index)
+const T& Vector<T>::at(size_t index) const 
+{
+  return const_cast<Vector<T>*>(this).at(index);
+}
+
+template <typename T>
+T& Vector<T>::at(size_t index) 
 {
   if (index >= _size)
   {
@@ -66,13 +72,13 @@ T& Vector<T>::operator[](size_t index)
 }
 
 template <typename T>
-size_t Vector<T>::size()
+size_t Vector<T>::size() const 
 {
   return _size;
 }
 
 template <typename T>
-bool Vector<T>::empty()
+bool Vector<T>::empty() const 
 {
   return _size == 0;
 }

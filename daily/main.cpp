@@ -81,6 +81,7 @@ void test() {
  * // 所以编译会出错
  */
 int main() {
+    test();
     int x = 106;
     int* px = &x;
     std::cout << *px << std::endl;
