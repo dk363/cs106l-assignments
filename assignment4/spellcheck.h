@@ -5,7 +5,6 @@
 #include <unordered_set>
 
 struct Token {
-
   // 标记内容
   std::string content;
   // 标记在原字符串中的起始位置
