@@ -85,9 +85,7 @@ User::~User() {
 User::User(const User& other) :
 _name(other._name), _friends(new std::string[other._capacity]),
 _size(other._size), _capacity(other._capacity) {
-  for (size_t i = 0; i < _size; ++i) {
-    _friends[i] = other._friends[i];
-  }
+  std::copy(other._friends, other._friends + other._size, _friends);
 }
 
 User& User::operator=(const User& other) {
@@ -101,10 +99,7 @@ User& User::operator=(const User& other) {
   _capacity = other._capacity;
 
   _friends = new std::string[_capacity];
-  for (size_t i = 0; i < _size; ++i) {
-    _friends[i] = other._friends[i];
-  }
-
+  std::copy(other._friends, other._friends + _size, _friends);
   return *this;
 }
 
