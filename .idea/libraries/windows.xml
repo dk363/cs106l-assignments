@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="windows">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/assignment3/autograder/Scripts/windows.zip!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
