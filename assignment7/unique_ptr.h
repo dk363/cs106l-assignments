@@ -6,85 +6,75 @@
 namespace cs106l {
 
 /**
- * @brief A smart pointer that owns an object and deletes it when it goes out of scope.
- * @tparam T The type of the object to manage.
- * @note This class is a simpler version of `std::unique_ptr`.
+ * @brief 一个智能指针，它拥有一个对象，并在超出作用域时删除该对象。
+ * @tparam T 要管理的对象类型。
+ * @note 这个类是 `std::unique_ptr` 的简化版本。
  */
 template <typename T> class unique_ptr {
 private:
-  /* STUDENT TODO: What data must a unique_ptr keep track of? */
+  T* _ptr;
+  /* STUDENT TODO: unique_ptr 需要跟踪哪些数据？ */
 
 public:
   /**
-   * @brief Constructs a new `unique_ptr` from the given pointer.
-   * @param ptr The pointer to manage.
-   * @note You should avoid using this constructor directly and instead use `make_unique()`.
+   * @brief 使用给定指针构造一个新的 `unique_ptr`。
+   * @param ptr 要管理的指针。
+   * @note 你应该尽量避免直接使用这个构造函数，而使用 `make_unique()`。
    */
-  unique_ptr(T* ptr) {
-    /* STUDENT TODO: Implement the constructor */
-    throw std::runtime_error("Not implemented: unique_ptr(T* ptr)");
-  }
+  unique_ptr(T* ptr) : _ptr(ptr) {}
 
   /**
-   * @brief Constructs a new `unique_ptr` from `nullptr`.
+   * @brief 使用 `nullptr` 构造一个新的 `unique_ptr`。
    */
-  unique_ptr(std::nullptr_t) {
-    /* STUDENT TODO: Implement the nullptr constructor */
-    throw std::runtime_error("Not implemented: unique_ptr(std::nullptr_t)");
-  }
+  unique_ptr(std::nullptr_t) : _ptr(nullptr) {}
 
   /**
-   * @brief Constructs an empty `unique_ptr`.
-   * @note By default, a `unique_ptr` points to `nullptr`.
+   * @brief 构造一个空的 `unique_ptr`。
+   * @note 默认情况下，`unique_ptr` 指向 `nullptr`。
    */
   unique_ptr() : unique_ptr(nullptr) {}
 
   /**
-   * @brief Dereferences a `unique_ptr` and returns a reference to the object.
-   * @return A reference to the object.
+   * @brief 解引用 `unique_ptr` 并返回对象的引用。
+   * @return 对象的引用。
    */
   T& operator*() {
-    /* STUDENT TODO: Implement the dereference operator */
-    throw std::runtime_error("Not implemented: operator*()");
+    return *_ptr;
   }
 
   /**
-   * @brief Dereferences a `unique_ptr` and returns a const reference to the object.
-   * @return A const reference to the object.
+   * @brief 解引用 `unique_ptr` 并返回对象的 const 引用。
+   * @return 对象的 const 引用。
    */
   const T& operator*() const {
-    /* STUDENT TODO: Implement the dereference operator (const) */
-    throw std::runtime_error("Not implemented: operator*() const");
+    return *_ptr;
   }
 
   /**
-   * @brief Returns a pointer to the object managed by the `unique_ptr`.
-   * @note This allows for accessing the members of the managed object through the `->` operator.
-   * @return A pointer to the object.
+   * @brief 返回 `unique_ptr` 管理的对象的指针。
+   * @note 这允许通过 `->` 操作符访问管理对象的成员。
+   * @return 指向对象的指针。
    */
   T* operator->() {
-    /* STUDENT TODO: Implement the arrow operator */
-    throw std::runtime_error("Not implemented: operator->()");
+    return _ptr;
   }
 
   /**
-   * @brief Returns a const pointer to the object managed by the `unique_ptr`.
-   * @note This allows for accessing the members of the managed object through the `->` operator.
-   * @return A const pointer to the object.
+   * @brief 返回 `unique_ptr` 管理的对象的 const 指针。
+   * @note 这允许通过 `->` 操作符访问管理对象的成员。
+   * @return 指向对象的 const 指针。
    */
   const T* operator->() const {
-    /* STUDENT TODO: Implement the arrow operator */
-    throw std::runtime_error("Not implemented: operator->() const");
+    return _ptr;
   }
 
   /**
-   * @brief Returns whether or not the `unique_ptr` is non-null.
-   * @note This allows us to use a `unique_ptr` inside an if-statement.
-   * @return `true` if the `unique_ptr` is non-null, `false` otherwise.
+   * @brief 返回 `unique_ptr` 是否非空。
+   * @note 这允许我们在 if 语句中使用 `unique_ptr`。
+   * @return 如果 `unique_ptr` 非空返回 `true`，否则返回 `false`。
    */
   operator bool() const {
-    /* STUDENT TODO: Implement the boolean conversion operator */
-    throw std::runtime_error("Not implemented: operator bool() const");
+    return _ptr != nullptr;
   }
 
   /** STUDENT TODO: In the space below, do the following:
@@ -94,18 +84,45 @@ public:
    * - Implement the move constructor
    * - Implement the move assignment operator
    */
+  /** STUDENT TODO: 在下面的空白处完成以下内容：
+   * - 实现析构函数
+   * - 删除拷贝构造函数
+   * - 删除拷贝赋值运算符
+   * - 实现移动构造函数
+   * - 实现移动赋值运算符
+   */
+  ~unique_ptr() {
+    delete _ptr;
+  }
+
+  unique_ptr(const unique_ptr& ptr) = delete;
+  unique_ptr& operator=(const unique_ptr& ptr) = delete;
+
+  unique_ptr(unique_ptr&& other) : _ptr(other._ptr) {
+    other._ptr = nullptr;
+  }
+
+  unique_ptr& operator=(unique_ptr&& other) {
+    if (this == &other) return *this;
+
+    delete this->_ptr;
+    this->_ptr = other._ptr;
+    other._ptr = nullptr;
+
+    return *this;
+  }
 };
 
-/**
- * @brief Creates a new unique_ptr for a type with the given arguments.
- * @example auto ptr = make_unique<int>(5);
- * @tparam T The type to create a unique_ptr for.
- * @tparam Args The types of the arguments to pass to the constructor of T.
- * @param args The arguments to pass to the constructor of T.
- */
-template <typename T, typename... Args> 
-unique_ptr<T> make_unique(Args&&... args) {
-  return unique_ptr<T>(new T(std::forward<Args>(args)...));
-}
-
+  /**
+   * @brief 使用给定参数创建一个新的 unique_ptr。
+   * @example auto ptr = make_unique<int>(5);
+   * @tparam T 要创建 unique_ptr 的类型。
+   * @tparam Args 传递给 T 构造函数的参数类型。
+   * @param args 传递给 T 构造函数的参数。
+   */
+  template <typename T, typename... Args> 
+  unique_ptr<T> make_unique(Args&&... args) {
+    return unique_ptr<T>(new T(std::forward<Args>(args)...));
+  }
+  
 }

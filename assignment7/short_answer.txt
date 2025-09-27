@@ -1,17 +1,14 @@
-Before submitting this file, make sure that there are no more TODO
-placeholders remaining in the file (and remove this comment too).
-
 Unique Pointer
---------------
 
-Q1. List one or two benefits of using RAII to manage memory instead manually calling `new` and `delete`.
-A1. TODO
+Q1. 列出一两个使用 RAII 管理内存而不是手动调用 new 和 delete 的好处。
+A1. 由 new 返回的指针被赋值给一个普通指针时，如果没有相应的 delete 调用，会导致内存泄漏
+    在大型程序中我们很难确定 我们需要的是 N 个指针 而不是 N + 1 或者 N - 1 个
 
-Q2. When implementing move semantics for a `unique_ptr`, for example in the move constructor `unique_ptr(unique_ptr&& other)`, it is essential that we set the underlying pointer of the `other` parameter to `nullptr` before exiting the function. Explain in your own words what problem would arise if we did not.
-A2. TODO
+Q2. 当为 unique_ptr 实现移动语义时，例如在移动构造函数 unique_ptr(unique_ptr&& other) 中，非常重要的一点是，在函数返回之前要将 other 的底层指针设置为 nullptr。请用你自己的话解释，如果不这么做，会出现什么问题。
+A2. 因为 other 是一个右值，是暂时的。在调用 other 之后会调用 析构函数 这个时候如果不讲指针设置为 nullptr 将会将指向的内存释放掉
 
-Q3. This method of recursive deallocation through RAII works great for small lists, but may pose a problem for longer lists. Why? Hint: what is the limit for how "deep" a recursive function's call stack can grow?
-A3. TODO
+Q3. 这种通过 RAII 递归释放内存的方法对于小链表效果很好，但对于较长的链表可能会有问题。为什么？提示：递归函数的调用栈可以增长得有多深是有限制的。
+A3. 由于递归函数的深度是有限制的 因此在递归释放内存的过程中 对于较长的链表来说 很可能会超出栈的深度 造成 stack overflow 造成程序崩溃
 
-Q4. What does `std::move` do in this context? Why is it safe to use `std::move` and move semantics here?
-A4. TODO
+Q4. 在这个上下文中，std::move 做了什么？为什么在这里使用 std::move 和移动语义是安全的？
+A4. 将左值 转换为 右值 从而将拷贝复制变为移动赋值 从而可以访问节点的内部资源 因为之后一定不会用到被移动节点的内部资源
