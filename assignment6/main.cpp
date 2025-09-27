@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <type_traits>
 #include <vector>
+#include <optional>
+#include <iostream>
 
 /** STUDENT_TODO: You will need to include a relevant header file here! */
 
@@ -52,8 +54,19 @@ public:
    * @param course_title The title of the course to find.
    * @return You will need to figure this out!
    */
-  FillMeIn find_course(std::string course_title)
+   /**
+   * 在数据库中查找具有给定标题的课程（如果存在）。
+   * @param course_title 要查找的课程标题。
+   * @return 你需要自行解决这个问题！
+   */
+  std::optional<Course> find_course(std::string course_title)
   {
+    for (Course& c : courses) {
+      if (c.title == course_title) {
+        return c;
+      }
+    }
+    return std::nullopt;
     /* STUDENT_TODO: Implement this method! You will need to change the return
      * type. */
   }
@@ -81,7 +94,16 @@ main(int argc, char* argv[])
     Please pay special attention to the README here
     ********************************************************/
 
-    std::string output = /* STUDENT_TODO */
+    std::string output = course // optional<Course>
+                          .and_then([](Course& c) -> std::optional<std::string> {
+                            return "Found course: " + c.title + "," 
+                                    + c.number_of_units + "," 
+                                    + c.quarter; 
+                          })
+                          .or_else([]() -> std::optional<std::string> {
+                            return "Course not found.";
+                          })
+                          .value();/* STUDENT_TODO */
 
     /********************************************************
      DO NOT MODIFY ANYTHING BELOW THIS LINE PLEASE
